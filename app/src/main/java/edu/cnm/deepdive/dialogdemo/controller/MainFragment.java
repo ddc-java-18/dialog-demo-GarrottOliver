@@ -1,5 +1,8 @@
 package edu.cnm.deepdive.dialogdemo.controller;
 
+import android.Manifest;
+import android.Manifest.permission;
+import android.content.pm.PackageManager;
 import android.icu.text.UnicodeSetSpanner.TrimOption;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import edu.cnm.deepdive.dialogdemo.databinding.FragmentMainBinding;
@@ -31,7 +36,10 @@ public class MainFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    // TODO: 7/15/24 Attach to viewmodel(s) and observe livedata of interest.
+    if (shouldExplainCameraPermission()) {
+      // TODO: 7/15/24 Show simple dialog to explain.
+    }
+    // TODO: 7/15/24 Attach to viewmodel and observe livedata of interest. 
   }
 
   @Override
@@ -39,4 +47,6 @@ public class MainFragment extends Fragment {
     binding = null;
     super.onDestroyView();
   }
+  
+
 }
