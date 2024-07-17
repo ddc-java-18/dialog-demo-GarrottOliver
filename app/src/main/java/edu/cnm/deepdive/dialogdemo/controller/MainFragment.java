@@ -36,9 +36,9 @@ public class MainFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    if (shouldExplainCameraPermission()) {
-      // TODO: 7/15/24 Show simple dialog to explain.
-    }
+//    if (shouldExplainCameraPermission()) {
+//      // TODO: 7/15/24 Show simple dialog to explain.
+//    }
     // TODO: 7/15/24 Attach to viewmodel and observe livedata of interest. 
   }
 
