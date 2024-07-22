@@ -13,12 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import edu.cnm.deepdive.dialogdemo.databinding.FragmentMainBinding;
+import edu.cnm.deepdive.dialogdemo.viewmodel.NotesViewModel;
 
 public class MainFragment extends Fragment {
 
   private FragmentMainBinding binding;
+  private NotesViewModel viewModel;
+
 
   @Nullable
   @Override
@@ -37,10 +41,12 @@ public class MainFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-//    if (shouldExplainCameraPermission()) {
-//      // TODO: 7/15/24 Show simple dialog to explain.
-//    }
-    // TODO: 7/15/24 Attach to viewmodel and observe livedata of interest. 
+    viewModel = new ViewModelProvider(requireActivity()).get(NotesViewModel.class);
+    viewModel
+        .getNotes()
+        .observe(getViewLifecycleOwner(), notes -> {
+          // TODO: 7/22/24 Create instance of adapter, and attach to binding notes.
+        });
   }
 
   @Override

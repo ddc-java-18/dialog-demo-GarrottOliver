@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity
       if (shouldExplainCameraPermission()) {
         navController.navigate(NavGraphDirections.navigateToExplanationFragment());
       } else {
-        onDismiss();      }
+        onDismiss();
+      }
     }
 
   }

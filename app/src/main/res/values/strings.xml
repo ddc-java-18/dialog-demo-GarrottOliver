@@ -7,4 +7,8 @@
   <string name="camera_permission_explanation">This app uses the camera to include images with notes.</string>
   <string name="capture_label">Capture</string>
   <string name="additional_stuff">Demo</string>
+  <string name="save_label">Save</string>
+  <string name="edit_note_title">Edit Photo Note</string>
+  <string name="add_description">Add new photo note</string>
+  <string name="thumbnail_description">Photo thumbnail</string>
 </resources>
