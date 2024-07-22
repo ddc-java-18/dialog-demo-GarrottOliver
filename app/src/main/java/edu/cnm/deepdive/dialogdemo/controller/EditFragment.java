@@ -1,26 +1,42 @@
 package edu.cnm.deepdive.dialogdemo.controller;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import edu.cnm.deepdive.dialogdemo.R;
 import edu.cnm.deepdive.dialogdemo.databinding.FragmentEditBinding;
+import edu.cnm.deepdive.dialogdemo.service.ImageFileProvider;
+import edu.cnm.deepdive.dialogdemo.viewmodel.NotesViewModel;
 import java.io.File;
 import java.util.UUID;
 
 public class EditFragment extends BottomSheetDialogFragment {
 
+  private static final String AUTHORITY = ImageFileProvider.class.getName().toLowerCase();
+
+
   private FragmentEditBinding binding;
+  private Uri uri;
+  private NotesViewModel viewModel;
+  String additionalStuff;// This is just for demonstrating passing data to destinations.
+  /** @noinspection DataFlowIssue*/
+
+  private ActivityResultLauncher<Uri> takePhotoLauncher;
+
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    additionalStuff = EditFragmentArgs.fromBundle(getArguments()).getAdditionalStuff();
+  }
 
   @Nullable
   @Override
@@ -34,7 +50,13 @@ public class EditFragment extends BottomSheetDialogFragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    // TODO: 7/15/24 Attach to viewmodel(s) and observe any LiveData of interest.
+    viewModel = new ViewModelProvider(requireActivity()).get(NotesViewModel.class);
+    viewModel.getImageUri()
+        .observe(getViewLifecycleOwner(), (uri) -> binding.thumbnail.setImageURI(uri));
+    takePhotoLauncher =
+        registerForActivityResult(new ActivityResultContracts.TakePicture(),
+            viewModel::confirmImageCapture);
+
   }
 
   @Override
@@ -45,11 +67,13 @@ public class EditFragment extends BottomSheetDialogFragment {
 
   private void takePicture() {
     Context context = requireContext();
-    File imageDir = new File(context.getFilesDir(), "images");
+    File imageDir = new File(context.getFilesDir(), "captured-images");
     //noinspection ResultOfMethodCallIgnored
     imageDir.mkdir();
     File file = new File(imageDir, UUID.randomUUID().toString());
-    Uri uri = FileProvider.getUriForFile(context, AUTHORITY, file);
+    uri = FileProvider.getUriForFile(context, AUTHORITY, file);
+    viewModel.setPendingImageUri(uri);
+    takePhotoLauncher.launch(uri);
   }
 
 }
