@@ -14,7 +14,7 @@ public interface NoteDao {
   void insert(Note note);
 
   @Query("SELECT * FROM note ORDER BY note_id ASC")
-  LiveData<List<Note>> getAll();
+  LiveData<List<Note>> selectAll();
 
 
 }

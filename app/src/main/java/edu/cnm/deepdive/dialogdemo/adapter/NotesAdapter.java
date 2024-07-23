@@ -54,4 +54,6 @@ public class NotesAdapter extends Adapter<ViewHolder> {
 
     }
   }
+
+
 }
