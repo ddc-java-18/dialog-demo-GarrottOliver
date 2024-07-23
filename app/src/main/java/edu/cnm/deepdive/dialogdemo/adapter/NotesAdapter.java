@@ -49,8 +49,9 @@ public class NotesAdapter extends Adapter<ViewHolder> {
     }
 
     private void bind(int position, @NonNull Note note) {
-      // TODO: 7/22/24 Use properties of note to put values in view widgets.
-    }
+      binding.comment.setText(note.getComment());
+      binding.thumbnail.setImageURI(note.getImage());
 
+    }
   }
 }

@@ -1,11 +1,17 @@
 package edu.cnm.deepdive.dialogdemo.model;
 
 import android.net.Uri;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "note")
 public class Note {
 
+  @PrimaryKey(autoGenerate = true)
+      @ColumnInfo(name = "note_id")
+  long id;
   private String comment;
-
   private Uri image;
 
   public Note(String comment, Uri image) {

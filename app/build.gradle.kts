@@ -45,6 +45,9 @@ dependencies {
     implementation(libs.fragment)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+
 
     runtimeOnly(libs.lifecycle.viewmodel)
     runtimeOnly(libs.lifecycle.livedata)
